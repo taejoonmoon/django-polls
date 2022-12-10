@@ -1,0 +1,20 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  web:
+    build: .
+    image: django-polls
+    env_file: env
+    ports:
+      - "8000:8000"
+    environment:
+      - TZ=Asia/Seoul
+  nginx:
+    image: nginx:1.21.1
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx_conf/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./static:/usr/share/nginx/html/static
+    environment:
+      - TZ=Asia/Seoul
